@@ -1,0 +1,42 @@
+executor:
+  name: python
+  options:
+    entry: __init__.py
+inputs_def:
+  - handle: file_name
+    json_schema:
+      type: string
+  - handle: data_rows
+    json_schema:
+      type: array
+  - handle: instruction
+    json_schema:
+      type: string
+      ui:widget: text
+  - handle: x_axis_name
+    json_schema:
+      type: string
+  - handle: y_axis_name
+    json_schema:
+      type: string
+outputs_def:
+  - handle: code_for_derive
+    json_schema:
+      type: string
+  - handle: code_explain
+    json_schema:
+      type: string
+  - handle: content
+    json_schema:
+      type: array
+  - handle: refined_x_axis_name
+    json_schema:
+      type: string
+  - handle: refined_y_axis_name
+    json_schema:
+      type: string
+title: Derive data
+description: |-
+  根据用户要求根据现有数据中提取符合要求的内容
+  ai 会生成代码并运行，然后达到用户的要求
+  会输出自动生成的代码和代码解释

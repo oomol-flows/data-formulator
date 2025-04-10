@@ -1,0 +1,81 @@
+{
+  "nodes": {
+    "process-data#1": {
+      "contentWidth": 484.85450983500067,
+      "rfNode": {
+        "position": {
+          "x": 946.6262769864147,
+          "y": 499.9209491444435
+        }
+      }
+    },
+    "+python#2": {
+      "contentWidth": 618.3167167376193,
+      "rfNode": {
+        "position": {
+          "x": 245.70615840804442,
+          "y": 141.66324363086724
+        }
+      }
+    },
+    "derive-data#1": {
+      "contentWidth": 431.84842006600974,
+      "rfNode": {
+        "position": {
+          "x": 946.6262769864147,
+          "y": -186.71754261038515
+        }
+      },
+      "sections": {
+        "inputs": {
+          "collapsed": {
+            "instruction": {
+              "[]": false
+            }
+          }
+        }
+      }
+    },
+    "+python#1": {
+      "contentWidth": 1104.7762446804913,
+      "rfNode": {
+        "position": {
+          "x": 1509.0728251836572,
+          "y": 221.55979966100773
+        }
+      },
+      "sections": {
+        "scriptlet": {
+          "cardCollapsed": true
+        }
+      }
+    },
+    "+python#3": {
+      "contentWidth": 560.5388391621203,
+      "rfNode": {
+        "position": {
+          "x": 1496.0827234865312,
+          "y": -429.3367563691328
+        }
+      },
+      "sections": {
+        "scriptlet": {
+          "cardCollapsed": true
+        }
+      }
+    },
+    "LLM#1": {
+      "rfNode": {
+        "position": {
+          "x": 2160.277617516427,
+          "y": -490.3367563691328
+        }
+      },
+      "sections": {
+        "inputHandle": {
+          "cardCollapsed": true
+        }
+      }
+    }
+  }
+}
