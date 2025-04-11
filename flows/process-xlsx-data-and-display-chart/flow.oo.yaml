@@ -52,6 +52,7 @@ nodes:
           - node_id: +python#2
             output_handle: output
       - handle: instruction
+        value: ""
       - handle: x_axis_name
       - handle: y_axis_name
     description: |-
