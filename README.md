@@ -8,9 +8,10 @@ It uses AI to analyze user intent, translates the intent into code, and executes
 The input file format should be a two-dimensional table. Complex header structures may lead to inaccurate results. Please organize the headers yourself.
 
 ## Flow
-* process-xlsx-data-and-display-chart
+###  process-xlsx-data-and-display-chart
+
 Receives an xlsx file, formats its content according to user requirements, and displays it as a chart. The flow has the following inputs:
-![flow](flow-1.jpeg)
+![flow](flow.jpeg)
 
 1. input: The file path, currently requiring an xlsx format with tabular content.
 2. instruction: The user's goal, such as calculating sales by region or the proportion of sales per region to total sales.
