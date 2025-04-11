@@ -11,7 +11,7 @@
 ###  process-xlsx-data-and-display-chart
 
 接收一个xlsx 格式的文件，将其内容按照用户的要求进行格式化，并以图表的形式展示。flow 的输入有以下几个：
-![flow](flow.jpeg)
+![flow](./flow.jpeg)
 
 1. input: 输入文件地址，文件目前需要时xlsx 格式，内容需要是表格的格式
 2. instruction: 用户需要达成的目的，比如统计每个地区的销售额，或者统计每个地区的销售额占总销售额的比例
