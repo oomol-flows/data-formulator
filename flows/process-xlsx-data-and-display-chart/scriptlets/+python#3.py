@@ -10,8 +10,9 @@ from oocana import Context
 
 def main(params: Inputs, context: Context) -> None:
 
-    # your code
-    context.preview(payload=TextPreviewPayload(
-        type= "text",
+    payload=dict(
+        type= "text/python",
         data= params["input"]
-    ))
+    )
+    # your code
+    context.preview(payload) # type: ignore

@@ -4,6 +4,7 @@ class Inputs(typing.TypedDict):
     file_name: str
     data_rows: list[typing.Any]
     instruction: str
+    code_repair_attempts: int | None
     x_axis_name: str
     y_axis_name: str
 class Outputs(typing.TypedDict):
@@ -25,6 +26,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     rows = params["data_rows"]
     instruction = params["instruction"]
 
+    max_repair_attempts = params["code_repair_attempts"]
     x_axis_name = params["x_axis_name"]
     y_axis_name = params["y_axis_name"]
     
@@ -53,12 +55,14 @@ def main(params: Inputs, context: Context) -> Outputs:
     print(new_fields)
     print(instruction)
 
-    max_repair_attempts  =1
+    if (max_repair_attempts is None):
+        max_repair_attempts = 1
     agent = DataTransformationAgentV2(client=llm_client)
     results = agent.run(input_tables, instruction, [field['name'] for field in new_fields], [], max_repair_attempts)
 
     repair_attempts = 0
     while results[0]['status'] == 'error' and repair_attempts < max_repair_attempts: # try up to n times
+        print("== code wrong, try repaire ===")
         error_message = results[0]['content']
         new_instruction = f"We run into the following problem executing the code, please fix it:\n\n{error_message}\n\nPlease think step by step, reflect why the error happens and fix the code so that no more errors would occur."
 
@@ -66,7 +70,6 @@ def main(params: Inputs, context: Context) -> Outputs:
 
         # 加上上一次的运行结果，加上修复 prompt 重新运行一次
         results = agent.followup(input_tables, prev_dialog, [field['name'] for field in new_fields], new_instruction)
-
         repair_attempts += 1
 
     res = results[0]

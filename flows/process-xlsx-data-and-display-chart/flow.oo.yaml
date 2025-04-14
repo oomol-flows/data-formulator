@@ -52,9 +52,10 @@ nodes:
           - node_id: +python#2
             output_handle: output
       - handle: instruction
-        value: ""
       - handle: x_axis_name
       - handle: y_axis_name
+      - handle: code_repair_attempts
+        value: 3
     description: |-
       instruction：需要达到的目的，比如“统计xxx 性价比高低，按照性价比排序”
       x_axis_name: 想要输出的横轴名称，可能会跟输出不一致，由ai 判断
@@ -62,6 +63,7 @@ nodes:
 
       code_for_derive: ai 自动生成的代码，用于提取数据
       content： 按照要求提取的数据
+      code_repair_attempts: 生成错误代码后重新尝试生成的次数
   - task:
       ui:
         default_width: 450

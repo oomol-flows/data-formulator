@@ -13,6 +13,10 @@ inputs_def:
     json_schema:
       type: string
       ui:widget: text
+  - handle: code_repair_attempts
+    json_schema:
+      type: integer
+    nullable: true
   - handle: x_axis_name
     json_schema:
       type: string

@@ -15,5 +15,5 @@ def main(params: dict, context: Context):
         print(e)
     if j is not None:
         jd = json.loads(j)
-    
+    context.preview(df)
     return {"file_name": file_name, "output": jd}
