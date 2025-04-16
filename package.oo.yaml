@@ -1,4 +1,4 @@
-version: 0.0.5
+version: 0.0.6
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -12,7 +12,4 @@ name: data-formulator
 description: Translate structured data into charts based on user-defined goals.
 displayName: Data Formulator
 repository: https://github.com/oomol-flows/data-formulator
-releaseNotes: |-
-  1. add code_repair_attempts param
-  2. add preview for input data
-  3. beautify generated code preview
+releaseNotes: add github action for auto publish
