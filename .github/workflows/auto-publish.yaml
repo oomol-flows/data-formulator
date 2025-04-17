@@ -19,5 +19,3 @@ jobs:
       run: npm install -g oopm
     - name: Publish OOMOL Package
       uses: oomol-lab/oopm-publish-action@main
-      with:
-        registry: https://registry.oomol.dev
