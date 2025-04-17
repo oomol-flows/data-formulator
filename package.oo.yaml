@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
