@@ -1,12 +1,11 @@
 #region generated meta
 import typing
 class Inputs(typing.TypedDict):
-    file_name: str
-    data_rows: list[typing.Any]
-    instruction: str
+    data: list[dict]
     code_repair_attempts: int | None
     x_axis_name: str
     y_axis_name: str
+    instruction: str
 class Outputs(typing.TypedDict):
     code_for_derive: str
     code_explain: str
@@ -21,16 +20,14 @@ from data_formulator.agents.client_utils import Client
 from oocana import Context
 
 def main(params: Inputs, context: Context) -> Outputs:
-
-    file_name = params["file_name"]
-    rows = params["data_rows"]
+    input_tables = params["data"]
     instruction = params["instruction"]
 
     max_repair_attempts = params["code_repair_attempts"]
     x_axis_name = params["x_axis_name"]
     y_axis_name = params["y_axis_name"]
     
-    if len(rows) == 0:
+    if len(input_tables) == 0:
         raise Exception("No data rows found")
     
     llm_client = Client(
@@ -40,10 +37,6 @@ def main(params: Inputs, context: Context) -> Outputs:
         api_key=context.oomol_llm_env.get("api_key")
     )
 
-    input_tables = [{
-        "name": file_name,
-        "rows": rows
-    }]
     new_fields = [{"name": x_axis_name}, {"name": y_axis_name}]
 
     print("== input tables ===>")

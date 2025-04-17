@@ -3,16 +3,19 @@ executor:
   options:
     entry: __init__.py
 inputs_def:
-  - handle: file_name
-    json_schema:
-      type: string
-  - handle: data_rows
+  - handle: data
     json_schema:
       type: array
-  - handle: instruction
-    json_schema:
-      type: string
-      ui:widget: text
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          rows:
+            type: array
+    value:
+      []
   - handle: code_repair_attempts
     json_schema:
       type: integer
@@ -23,6 +26,10 @@ inputs_def:
   - handle: y_axis_name
     json_schema:
       type: string
+  - handle: instruction
+    json_schema:
+      type: string
+      ui:widget: text
 outputs_def:
   - handle: code_for_derive
     json_schema:
@@ -44,3 +51,5 @@ description: |-
   根据用户要求根据现有数据中提取符合要求的内容
   ai 会生成代码并运行，然后达到用户的要求
   会输出自动生成的代码和代码解释
+icon: ":fa6-solid:retweet:"
+additional_inputs: false
