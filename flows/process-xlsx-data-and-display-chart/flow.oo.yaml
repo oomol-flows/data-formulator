@@ -1,42 +1,4 @@
 nodes:
-  - task:
-      ui:
-        default_width: 450
-      inputs_def:
-        - handle: input
-          description: Input
-          json_schema:
-            type: array
-            items:
-              type: string
-              ui:widget: file
-      outputs_def:
-        - handle: output
-          description: Output
-          json_schema:
-            type: array
-            items:
-              type: object
-              additionalProperties: false
-              properties:
-                name:
-                  type: string
-                rows:
-                  type: array
-      executor:
-        name: python
-        options:
-          entry: scriptlets/+python#2.py
-    title: "Input File"
-    icon: ":logos:python:"
-    node_id: +python#2
-    inputs_from:
-      - handle: input
-        value:
-          []
-    description: |-
-      传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
-      文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
   - task: self::derive-data
     title: Derive data
     node_id: derive-data#1
@@ -48,7 +10,7 @@ nodes:
         value: 3
       - handle: data
         from_node:
-          - node_id: +python#2
+          - node_id: read_files#1
             output_handle: output
     description: |-
       instruction：需要达到的目的，比如“统计xxx 性价比高低，按照性价比排序”
@@ -60,43 +22,6 @@ nodes:
       code_repair_attempts: 生成错误代码后重新尝试生成的次数
     inputs_def:
       []
-  - task:
-      ui:
-        default_width: 450
-      inputs_def:
-        - handle: data
-          json_schema:
-            type: array
-        - handle: x_column
-          description: Input
-          json_schema:
-            type: string
-        - handle: y_column
-          json_schema:
-            type: string
-      outputs_def:
-        []
-      executor:
-        name: python
-        options:
-          entry: scriptlets/+python#1.py
-    title: Result Chart
-    icon: ":logos:python:"
-    node_id: +python#1
-    inputs_from:
-      - handle: x_column
-        from_node:
-          - node_id: derive-data#1
-            output_handle: refined_x_axis_name
-      - handle: y_column
-        from_node:
-          - node_id: derive-data#1
-            output_handle: refined_y_axis_name
-      - handle: data
-        from_node:
-          - node_id: derive-data#1
-            output_handle: content
-    description: 结果表格
   - task:
       ui:
         default_width: 450
@@ -138,4 +63,31 @@ nodes:
         value:
           - role: system
             content: 将以下内容翻译为中文并输出 {{input}}，不要输出任何与翻译无关的内容
+        schema_overrides:
+          - schema:
+              type: array
     description: 翻译代码解释
+  - node_id: read_files#1
+    task: self::read_files
+    inputs_from:
+      - handle: input
+        value:
+          []
+    description: |-
+      传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
+      文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
+  - node_id: result_chart#1
+    task: self::result_chart
+    inputs_from:
+      - handle: x_column
+        from_node:
+          - node_id: derive-data#1
+            output_handle: refined_x_axis_name
+      - handle: y_column
+        from_node:
+          - node_id: derive-data#1
+            output_handle: refined_y_axis_name
+      - handle: data
+        from_node:
+          - node_id: derive-data#1
+            output_handle: content

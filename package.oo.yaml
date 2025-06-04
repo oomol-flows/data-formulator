@@ -1,15 +1,15 @@
-version: 0.0.7
+version: 0.1.1
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
   bootstrap: |
     npm install
-    pip install -r requirements.txt
+    poetry install --no-root
 dependencies:
-  llm: 0.2.2
+  llm: 0.2.6
 icon: ./icon.png
 name: data-formulator
 description: Translate structured data into charts based on user-defined goals.
 displayName: Data Formulator
 repository: https://github.com/oomol-flows/data-formulator
-releaseNotes: support multiple input files
+releaseNotes: "fix: remove demo input params"

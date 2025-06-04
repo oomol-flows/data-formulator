@@ -1,0 +1,23 @@
+ui:
+  default_width: 450
+inputs_def:
+  - handle: data
+    json_schema:
+      type: array
+  - handle: x_column
+    description: Input
+    json_schema:
+      type: string
+  - handle: y_column
+    json_schema:
+      type: string
+outputs_def:
+  []
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+title: Result Chart
+description: 结果表格
+icon: ":twemoji:bar-chart:"

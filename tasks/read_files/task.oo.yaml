@@ -1,0 +1,33 @@
+ui:
+  default_width: 450
+inputs_def:
+  - handle: input
+    description: Input
+    json_schema:
+      type: array
+      items:
+        type: string
+        ui:widget: file
+outputs_def:
+  - handle: output
+    description: Output
+    json_schema:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          rows:
+            type: array
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+title: Read Files
+description: |-
+  传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
+  文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
+icon: ":fa6-solid:file:"

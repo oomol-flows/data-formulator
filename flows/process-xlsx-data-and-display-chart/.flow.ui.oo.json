@@ -1,25 +1,11 @@
 {
   "nodes": {
-    "+python#2": {
-      "contentWidth": 618.3167167376193,
-      "rfNode": {
-        "position": {
-          "x": 154.7271169020836,
-          "y": -429.3367563691328
-        }
-      },
-      "sections": {
-        "preview": {
-          "cardCollapsed": true
-        }
-      }
-    },
     "derive-data#1": {
       "contentWidth": 471.97512306747035,
       "rfNode": {
         "position": {
-          "x": 876.2060074489486,
-          "y": -429.3367563691328
+          "x": 684,
+          "y": 1492
         }
       },
       "sections": {
@@ -32,26 +18,12 @@
         }
       }
     },
-    "+python#1": {
-      "contentWidth": 1104.7762446804913,
-      "rfNode": {
-        "position": {
-          "x": 1496.0827234865312,
-          "y": 225.92465416445683
-        }
-      },
-      "sections": {
-        "scriptlet": {
-          "cardCollapsed": true
-        }
-      }
-    },
     "+python#3": {
       "contentWidth": 560.5388391621203,
       "rfNode": {
         "position": {
-          "x": 1496.0827234865312,
-          "y": -429.3367563691328
+          "x": 1276.5813225485458,
+          "y": 1505
         }
       },
       "sections": {
@@ -61,16 +33,28 @@
       }
     },
     "LLM#1": {
-      "contentWidth": 559.8344794308096,
       "rfNode": {
         "position": {
-          "x": 2150.424280149166,
-          "y": -429.3367563691328
+          "x": 1901.3280533691157,
+          "y": 1505
         }
-      },
-      "sections": {
-        "inputHandle": {
-          "cardCollapsed": true
+      }
+    },
+    "read_files#1": {
+      "contentWidth": 618.3167167376193,
+      "rfNode": {
+        "position": {
+          "x": -12.88406977490098,
+          "y": 1492
+        }
+      }
+    },
+    "result_chart#1": {
+      "contentWidth": 1104.7762446804913,
+      "rfNode": {
+        "position": {
+          "x": 1276.5813225485458,
+          "y": 2161.2306927589134
         }
       }
     }

@@ -1,5 +1,6 @@
 #region generated meta
 import typing
+from oocana import Context
 class Inputs(typing.TypedDict):
     data: list[dict]
     code_repair_attempts: int | None
@@ -30,7 +31,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     if len(input_tables) == 0:
         raise Exception("No data rows found")
     
-    llm_client = Client(
+    llm_client: Client = Client(
         endpoint="openai",
         api_base=context.oomol_llm_env.get("base_url_v1"),
         model="oomol-chat",

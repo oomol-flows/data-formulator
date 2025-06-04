@@ -1,5 +1,6 @@
 #region generated meta
 import typing
+from oocana import Context
 class Inputs(typing.TypedDict):
     data: list[typing.Any]
     x_column: str

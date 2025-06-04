@@ -1,30 +1,24 @@
 # data-formulator
 
-This project is modified from [microsoft/data-formulator](https://github.com/microsoft/data-formulator).
+This project is based on the [microsoft/data-formulator](https://github.com/microsoft/data-formulator) software.
 
-This project is designed to analyze tabular data uploaded by users and format it according to user preferences for custom output.
-The project uses AI to analyze user intent, translates it into code, and executes the code to generate formatted data displayed as charts.
+This project is used to analyze user-uploaded tabular data and then output it in a custom format according to user requirements.
+The project uses AI to analyze user intent, convert it into code, and finally execute the code to generate the required formatted data and display it in a chart.
 
-The input file should be in a tabular format. Complex header structures may lead to inaccurate results. Please organize the headers accordingly.
+The input file format should be a two-dimensional table. If the header is complex, the results may be inaccurate. Please organize the header yourself.
+
+Due to the use of AI models to generate results, the results may not be consistent each time. If the results are inaccurate, please regenerate.
 
 ## Flow
 ### process-xlsx-data-and-display-chart
 
-Accepts an xlsx file, formats its content based on user requirements, and displays it as a chart. The flow has the following inputs:
+Receives an xlsx format file, formats its content according to user requirements, and displays it in a chart. The flow has the following inputs:
 ![flow](./flow.png)
 
-1. input: An array of input file paths. Multiple files can be processed simultaneously. Currently, files must be in xlsx or csv format with tabular content.
-2. x_axis_name: The name of the x-axis in the output chart. If the AI determines it matches a column name in the original table, it will use the original column name.
-3. y_axis_name: The name of the y-axis in the output chart. If the AI determines it matches a column name in the original table, it will use the original column name.
-4. instruction: The user's goal, such as calculating sales by region or the proportion of sales per region to total sales.
+1. input: Input file address array, you can add and select multiple files to process at the same time. The files currently need to be in xlsx or csv format, and the content needs to be in a table format.
+2. x_axis_name: The name of the horizontal axis of the output chart. After AI judgment, if the name is consistent with the meaning of the original table's column name, it will be changed to the original table's column name.
+3. y_axis_name: The name of the vertical axis of the output chart. After AI judgment, if the name is consistent with the meaning of the original table's column name, it will be changed to the original table's column name.
+4. instruction: The user's goal, such as calculating the sales volume of each region, or calculating the proportion of sales volume of each region to the total sales volume.
 
-The flow outputs a chart with user-specified x and y-axis names, generated based on the user's instructions. The AI generates and executes code to produce the chart.
-If the code fails, the flow automatically modifies it and retries up to 3 times.
-
-## Shared Block
-* derive-data
-Users can specify the x and y-axis names for the output table and define custom requirements. The AI determines how to meet these requirements, generates code, and executes it to produce the desired chart data structure.
-Code execution failures trigger automatic modifications and retries, up to 3 times.
-
-* summarize-data
-Summarizes input data (in array format), describing what the data records and automatically determining its format.
+The final flow will output a chart. The horizontal and vertical axis names of the chart are specified by the user, and the content of the chart is generated according to the user's instructions. AI will generate code based on user instructions and then execute the code to generate the chart.
+If the code execution fails, the flow will automatically modify the code and retry 3 times.

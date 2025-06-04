@@ -1,5 +1,6 @@
 #region generated meta
 import typing
+from oocana import Context
 class Inputs(typing.TypedDict):
     file_name: str
     data_rows: list[typing.Any]

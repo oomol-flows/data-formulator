@@ -1,0 +1,21 @@
+[project]
+name = "data-formulator"
+version = "1.0.0"
+description = ""
+authors = [
+    {name = "a1528zhang",email = "beingszhang@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas (==2.2.3)",
+    "openpyxl (==3.1.5)",
+    "openai (==1.72.0)",
+    "litellm (==1.65.4.post1)",
+    "plotly (==6.0.1)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

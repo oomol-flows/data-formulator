@@ -48,7 +48,7 @@ outputs_def:
       type: string
 title: Derive data
 description: |-
-  根据用户要求根据现有数据中提取符合要求的内容
+  根据用户要求从现有数据中提取符合要求的内容
   ai 会生成代码并运行，然后达到用户的要求
   会输出自动生成的代码和代码解释
 icon: ":fa6-solid:retweet:"
