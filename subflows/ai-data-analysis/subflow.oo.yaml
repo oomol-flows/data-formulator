@@ -4,10 +4,16 @@ nodes:
     node_id: derive-data#1
     inputs_from:
       - handle: instruction
+        from_flow:
+          - input_handle: instruction
       - handle: x_axis_name
         value:
+        from_flow:
+          - input_handle: x_axis_name
       - handle: y_axis_name
         value:
+        from_flow:
+          - input_handle: y_axis_name
       - handle: code_repair_attempts
         value:
       - handle: data
@@ -24,29 +30,6 @@ nodes:
       code_repair_attempts: 生成错误代码后重新尝试生成的次数
     inputs_def:
       []
-  - task:
-      ui:
-        default_width: 450
-      inputs_def:
-        - handle: input
-          description: Input
-          json_schema:
-            type: string
-      outputs_def:
-        []
-      executor:
-        name: python
-        options:
-          entry: scriptlets/+python#3.py
-    title: Code preview
-    icon: ":logos:python:"
-    node_id: +python#3
-    inputs_from:
-      - handle: input
-        from_node:
-          - node_id: derive-data#1
-            output_handle: code_for_derive
-    description: 预览自动生成的代码
   - task: llm::LLM
     title: "LLM #1"
     node_id: LLM#1
@@ -75,6 +58,10 @@ nodes:
       - handle: input
         value:
           []
+        from_flow:
+          - input_handle: input
+      - handle: enable_preview
+        value: false
     description: |-
       传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
       文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
@@ -93,3 +80,57 @@ nodes:
         from_node:
           - node_id: derive-data#1
             output_handle: content
+  - node_id: code_preview#1
+    task: self::code_preview
+    inputs_from:
+      - handle: input
+        from_node:
+          - node_id: derive-data#1
+            output_handle: code_for_derive
+inputs_def:
+  - handle: input
+    description: Input
+    json_schema:
+      type: array
+      items:
+        type: string
+        ui:widget: file
+    value:
+      []
+    nullable: false
+    executor_name: python
+  - handle: instruction
+    json_schema:
+      type: string
+      ui:widget: text
+    nullable: false
+    executor_name: python
+  - handle: x_axis_name
+    json_schema:
+      type: string
+    nullable: true
+    value:
+    executor_name: python
+  - handle: y_axis_name
+    json_schema:
+      type: string
+    nullable: true
+    value:
+    executor_name: python
+outputs_def:
+  - handle: output
+    json_schema:
+      type: string
+    nullable: false
+    executor_name: nodejs
+outputs_from:
+  - handle: output
+    from_node:
+      - node_id: LLM#1
+        output_handle: output
+icon: ":twemoji:brain:"
+title: AI Data Analysis
+forward_previews:
+  - result_chart#1
+  - LLM#1
+description: 输入一组 csv 或者 xlsx 格式的文件地址，获得图标和分析思路的文字内容

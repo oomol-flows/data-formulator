@@ -5,8 +5,19 @@ from oocana import Context
 import pandas as pd
 import os
 
-def main(params: dict, context: Context):
+#region generated meta
+import typing
+class Inputs(typing.TypedDict):
+    input: list[str]
+    enable_preview: bool
+class Outputs(typing.TypedDict):
+    output: list[dict]
+#endregion
+
+
+def main(params: Inputs, context: Context) -> Outputs:
     input_files: Any | None = params.get("input")
+    enable_preview: bool = params.get("enable_preview", False)
     assert input_files is not None
     assert len(input_files) > 0 
 
@@ -24,10 +35,13 @@ def main(params: dict, context: Context):
         file_name = os.path.basename(file)
         try:
             j = df.to_json(orient="records",force_ascii=False)
+            jd = json.loads(j) if j is not None else []
         except Exception as e:
             print(e)
-        if j is not None:
-            jd = json.loads(j)
+            jd = []
         output.append({"name": file_name, "rows": jd})
-        context.preview(df)
+        
+        # 根据 enable_preview 参数决定是否执行预览
+        if enable_preview:
+            context.preview(df)
     return {"output": output}

@@ -1,0 +1,74 @@
+{
+  "nodes": {
+    "derive-data#1": {
+      "contentWidth": 471.97512306747035,
+      "rfNode": {
+        "position": {
+          "x": 1170,
+          "y": 437.5
+        }
+      },
+      "sections": {
+        "inputs": {
+          "collapsed": {
+            "instruction": {
+              "[]": false
+            }
+          }
+        }
+      }
+    },
+    "LLM#1": {
+      "rfNode": {
+        "position": {
+          "x": 2050.5,
+          "y": 0
+        }
+      }
+    },
+    "read_files#1": {
+      "contentWidth": 618.3167167376193,
+      "rfNode": {
+        "position": {
+          "x": 486,
+          "y": 621.5
+        }
+      }
+    },
+    "result_chart#1": {
+      "contentWidth": 1104.7762446804913,
+      "rfNode": {
+        "position": {
+          "x": 1737.7615795121947,
+          "y": 910.3839914982535
+        }
+      }
+    },
+    "code_preview#1": {
+      "rfNode": {
+        "position": {
+          "x": 2050.5,
+          "y": 809
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": 445.4913830598019,
+          "y": 1041.606820661396
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 2879,
+          "y": 199.5
+        }
+      }
+    }
+  }
+}

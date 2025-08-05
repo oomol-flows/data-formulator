@@ -23,9 +23,13 @@ inputs_def:
   - handle: x_axis_name
     json_schema:
       type: string
+    value:
+    nullable: true
   - handle: y_axis_name
     json_schema:
       type: string
+    value:
+    nullable: true
   - handle: instruction
     json_schema:
       type: string
@@ -51,5 +55,5 @@ description: |-
   根据用户要求从现有数据中提取符合要求的内容
   ai 会生成代码并运行，然后达到用户的要求
   会输出自动生成的代码和代码解释
-icon: ":fa6-solid:retweet:"
+icon: ":carbon:ibm-application-and-discovery-delivery-intelligence:"
 additional_inputs: false

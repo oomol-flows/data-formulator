@@ -1,0 +1,18 @@
+ui:
+  default_width: 450
+inputs_def:
+  - handle: input
+    description: Input
+    json_schema:
+      type: string
+outputs_def:
+  []
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+title: Code preview
+description: 预览自动生成的代码
+icon: ":carbon:ibm-watsonx-code-assistant-for-z-refactor:"
+tool: true

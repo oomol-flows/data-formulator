@@ -1,0 +1,10 @@
+nodes:
+  - node_id: ai-data-analysis#1
+    title: "AI Data Analysis #1"
+    inputs_from:
+      - handle: input
+        value:
+          - /oomol-driver/desktop/table/data_oomol.csv
+      - handle: instruction
+        value: 分析一下亚洲幸福指数最高的 10 个国家
+    subflow: self::ai-data-analysis

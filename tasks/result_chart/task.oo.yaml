@@ -8,9 +8,13 @@ inputs_def:
     description: Input
     json_schema:
       type: string
+    value:
+    nullable: true
   - handle: y_column
     json_schema:
       type: string
+    value:
+    nullable: true
 outputs_def:
   []
 executor:
@@ -20,4 +24,4 @@ executor:
     spawn: false
 title: Result Chart
 description: 结果表格
-icon: ":twemoji:bar-chart:"
+icon: ":carbon:chart-average:"
