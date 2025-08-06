@@ -1,11 +1,13 @@
 #region generated meta
 import typing
+from oocana import LLMModelOptions
 class Inputs(typing.TypedDict):
     data: list[dict]
-    code_repair_attempts: int | None
+    instruction: str
     x_axis_name: str | None
     y_axis_name: str | None
-    instruction: str
+    code_repair_attempts: int | None
+    llm_model: LLMModelOptions
 class Outputs(typing.TypedDict):
     code_for_derive: str
     code_explain: str
@@ -20,22 +22,25 @@ from data_formulator.agents.client_utils import Client
 from oocana import Context
 
 def main(params: Inputs, context: Context) -> Outputs:
-    input_tables = params["data"]
-    instruction = params["instruction"]
+    input_tables = params.get("data", [])
+    instruction = params.get("instruction", "")
 
     # 处理可选参数，设置默认值
-    max_repair_attempts = params["code_repair_attempts"] or 3
-    x_axis_name = params["x_axis_name"]
-    y_axis_name = params["y_axis_name"]
+    max_repair_attempts = params.get("code_repair_attempts") or 3
+    x_axis_name = params.get("x_axis_name")
+    y_axis_name = params.get("y_axis_name")
+    my_llm_model = params.get("llm_model")
     
     if len(input_tables) == 0:
         raise Exception("No data rows found")
-    
     llm_client: Client = Client(
         endpoint="openai",
         api_base=context.oomol_llm_env.get("base_url_v1"),
-        model="oomol-chat",
-        api_key=context.oomol_llm_env.get("api_key")
+        model=my_llm_model.get("model", "oomol-chat"),
+        api_key=context.oomol_llm_env.get("api_key"),
+        # temperature=my_llm_model.get("temperature", 0.7),
+        # top_p=my_llm_model.get("top_p", 1.0),
+        # max_tokens=my_llm_model.get("max_tokens", 1200)
     )
 
     # 构建预期字段列表，过滤掉 None 值

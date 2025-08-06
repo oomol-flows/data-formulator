@@ -2,6 +2,7 @@
 import typing
 class Inputs(typing.TypedDict):
     data: list[typing.Any]
+    title: str | None
     x_column: str | None
     y_column: str | None
 Outputs = typing.Dict[str, typing.Any]
@@ -11,8 +12,10 @@ from oocana import Context
 import pandas as pd
 import plotly.express as px
 
-def main(params: dict, context: Context):
+def main(params: Inputs, context: Context) -> Outputs:
     title = "result"
+    if params.get("title") is not None:
+        title = params["title"]
     df = pd.DataFrame(params["data"])
 
     assert df is not None

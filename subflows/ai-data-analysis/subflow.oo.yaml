@@ -5,21 +5,40 @@ nodes:
     inputs_from:
       - handle: instruction
         from_flow:
-          - input_handle: instruction
+          []
+        from_node:
+          - node_id: llm#2
+            output_handle: instruction
       - handle: x_axis_name
         value:
         from_flow:
-          - input_handle: x_axis_name
+          []
+        from_node:
+          - node_id: llm#2
+            output_handle: x_axis_name
       - handle: y_axis_name
         value:
         from_flow:
-          - input_handle: y_axis_name
+          []
+        from_node:
+          - node_id: llm#2
+            output_handle: y_axis_name
       - handle: code_repair_attempts
         value:
+        from_flow:
+          - input_handle: code_repair_attempts
       - handle: data
         from_node:
           - node_id: read_files#1
             output_handle: output
+      - handle: llm_model
+        value:
+          model: oomol-chat
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+        from_flow:
+          - input_handle: llm_model
     description: |-
       instruction：需要达到的目的，比如“统计xxx 性价比高低，按照性价比排序”
       x_axis_name: 想要输出的横轴名称，可能会跟输出不一致，由ai 判断
@@ -30,28 +49,6 @@ nodes:
       code_repair_attempts: 生成错误代码后重新尝试生成的次数
     inputs_def:
       []
-  - task: llm::LLM
-    title: "LLM #1"
-    node_id: LLM#1
-    inputs_from:
-      - handle: input
-        from_node:
-          - node_id: derive-data#1
-            output_handle: code_explain
-      - handle: model
-        value:
-          model: openai/gpt-4.1
-          temperature: 0
-          top_p: 0.5
-          max_tokens: 4096
-      - handle: messages
-        value:
-          - role: system
-            content: 将以下内容翻译为中文并输出 {{input}}，不要输出任何与翻译无关的内容
-        schema_overrides:
-          - schema:
-              type: array
-    description: 翻译代码解释
   - node_id: read_files#1
     task: self::read_files
     inputs_from:
@@ -61,7 +58,7 @@ nodes:
         from_flow:
           - input_handle: input
       - handle: enable_preview
-        value: false
+        value: true
     description: |-
       传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
       文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
@@ -80,6 +77,11 @@ nodes:
         from_node:
           - node_id: derive-data#1
             output_handle: content
+      - handle: title
+        value:
+        from_node:
+          - node_id: llm#2
+            output_handle: title
   - node_id: code_preview#1
     task: self::code_preview
     inputs_from:
@@ -87,6 +89,140 @@ nodes:
         from_node:
           - node_id: derive-data#1
             output_handle: code_for_derive
+  - node_id: llm-chat#1
+    title: "LLM chat #1"
+    inputs_from:
+      - handle: messages
+        value: null
+      - handle: timeout
+        value: 30
+      - handle: retry_times
+        value: 0
+      - handle: model
+        value:
+          model: oomol-chat
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+        from_flow:
+          - input_handle: llm_model
+      - handle: template
+        value:
+          - role: user
+            content: "将{{input}}内容翻译为{{language}}"
+        schema_overrides:
+          - schema:
+              type: array
+      - handle: retry_sleep
+        value: 3.5
+      - handle: skills
+        value:
+          []
+      - handle: stream
+        value: true
+      - handle: input
+        from_node:
+          - node_id: derive-data#1
+            output_handle: code_explain
+      - handle: language
+        from_node:
+          - node_id: llm#2
+            output_handle: language
+    task: llm::llm-chat
+    inputs_def:
+      - handle: input
+        json_schema:
+          type: string
+      - handle: language
+        json_schema:
+          type: string
+  - node_id: markdown_text_preview#1
+    title: "Markdown preview #1"
+    inputs_from:
+      - handle: text
+        from_node:
+          - node_id: llm-chat#1
+            output_handle: output
+    task: oomol-preview::markdown_text_preview
+  - node_id: llm#2
+    title: "LLM #2"
+    inputs_from:
+      - handle: messages
+        value: null
+      - handle: timeout
+        value: 30
+      - handle: retry_times
+        value: 0
+      - handle: retry_sleep
+        value: 3.5
+      - handle: model
+        value:
+          model: oomol-chat
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+        from_flow:
+          - input_handle: llm_model
+      - handle: template
+        value:
+          - role: user
+            content: "你是一个数据分析的专家，深刻理解数据可视化，数据分析，数据处理。
+
+              1. 你的任务是分析用户输入内容 {{instruction}}
+              的意图，理解意图之后描述出更加详细专业的内容。
+
+              2. 阅读{{instruction}}内容，判断作者使用的语言
+
+              3. 根据意图生产一个合适的图标名称\n"
+        schema_overrides:
+          - schema:
+              type: array
+      - handle: skills
+        value:
+          []
+      - handle: stream
+        value: true
+      - handle: instruction
+        from_flow:
+          - input_handle: instruction
+      - handle: x_axis_name
+        value:
+        from_flow:
+          - input_handle: x_axis_name
+      - handle: y_axis_name
+        value:
+        from_flow:
+          - input_handle: y_axis_name
+    task: llm::llm
+    inputs_def:
+      - handle: instruction
+        json_schema:
+          {}
+      - handle: x_axis_name
+        json_schema:
+          type: string
+        nullable: true
+      - handle: y_axis_name
+        json_schema:
+          type: string
+        nullable: true
+    outputs_def:
+      - handle: instruction
+        json_schema:
+          type: string
+      - handle: title
+        json_schema:
+          type: string
+      - handle: x_axis_name
+        description: write your answer here
+        json_schema:
+          type: string
+      - handle: y_axis_name
+        json_schema:
+          type: string
+      - handle: language
+        json_schema:
+          type: string
 inputs_def:
   - handle: input
     description: Input
@@ -105,15 +241,34 @@ inputs_def:
       ui:widget: text
     nullable: false
     executor_name: python
+  - group: Group
   - handle: x_axis_name
     json_schema:
       type: string
-    nullable: true
     value:
+    nullable: true
+    executor_name: python
+  - handle: llm_model
+    json_schema:
+      ui:options:
+        title: Model
+      ui:widget: llm::model
+    nullable: false
+    value:
+      model: openai/gpt-4.1
+      temperature: 0
+      top_p: 0.5
+      max_tokens: 4096
     executor_name: python
   - handle: y_axis_name
     json_schema:
       type: string
+    value:
+    nullable: true
+    executor_name: python
+  - handle: code_repair_attempts
+    json_schema:
+      type: integer
     nullable: true
     value:
     executor_name: python
@@ -126,11 +281,12 @@ outputs_def:
 outputs_from:
   - handle: output
     from_node:
-      - node_id: LLM#1
+      - node_id: llm-chat#1
         output_handle: output
 icon: ":twemoji:brain:"
 title: AI Data Analysis
 forward_previews:
   - result_chart#1
-  - LLM#1
+  - read_files#1
+  - markdown_text_preview#1
 description: 输入一组 csv 或者 xlsx 格式的文件地址，获得图标和分析思路的文字内容

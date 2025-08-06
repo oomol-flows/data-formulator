@@ -4,8 +4,8 @@
       "contentWidth": 471.97512306747035,
       "rfNode": {
         "position": {
-          "x": 1170,
-          "y": 437.5
+          "x": 1174,
+          "y": 785
         }
       },
       "sections": {
@@ -18,37 +18,74 @@
         }
       }
     },
-    "LLM#1": {
-      "rfNode": {
-        "position": {
-          "x": 2050.5,
-          "y": 0
-        }
-      }
-    },
     "read_files#1": {
       "contentWidth": 618.3167167376193,
       "rfNode": {
         "position": {
-          "x": 486,
-          "y": 621.5
+          "x": 488,
+          "y": 0
         }
       }
     },
     "result_chart#1": {
-      "contentWidth": 1104.7762446804913,
+      "contentWidth": 792.4690143528081,
       "rfNode": {
         "position": {
-          "x": 1737.7615795121947,
-          "y": 910.3839914982535
+          "x": 1712,
+          "y": 27
         }
       }
     },
     "code_preview#1": {
       "rfNode": {
         "position": {
-          "x": 2050.5,
-          "y": 809
+          "x": 1898,
+          "y": 800
+        }
+      }
+    },
+    "llm-chat#1": {
+      "rfNode": {
+        "position": {
+          "x": 1898,
+          "y": 1617
+        }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "Connection": true
+          }
+        }
+      }
+    },
+    "markdown_text_preview#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 2570,
+          "y": 1481.5
+        }
+      }
+    },
+    "llm#2": {
+      "contentWidth": 622.0622947511232,
+      "rfNode": {
+        "position": {
+          "x": 486,
+          "y": 1001.25
+        }
+      },
+      "sections": {
+        "inputs": {
+          "collapsed": {
+            "messages": {
+              "[]": false
+            }
+          },
+          "groupCollapsed": {
+            "Connection": true
+          }
         }
       }
     }
@@ -57,16 +94,16 @@
     "input": {
       "rfNode": {
         "position": {
-          "x": 445.4913830598019,
-          "y": 1041.606820661396
+          "x": 0,
+          "y": 1247.25
         }
       }
     },
     "output": {
       "rfNode": {
         "position": {
-          "x": 2879,
-          "y": 199.5
+          "x": 2585,
+          "y": 1922.5
         }
       }
     }

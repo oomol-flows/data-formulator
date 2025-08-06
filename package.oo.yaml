@@ -1,13 +1,14 @@
-version: 0.1.3
+version: 0.1.5
 scripts:
   bootstrap: |
     npm install
     poetry install --no-root
 dependencies:
-  llm: 0.2.6
+  llm: 0.3.3
+  oomol-preview: 0.1.0
 icon: ./icon.png
 name: data-formulator
 description: Translate structured data into charts based on user-defined goals.
 displayName: Data Formulator
 repository: https://github.com/oomol-flows/data-formulator
-releaseNotes: update block
+releaseNotes: remove flow

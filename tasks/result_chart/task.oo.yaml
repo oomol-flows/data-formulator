@@ -4,6 +4,11 @@ inputs_def:
   - handle: data
     json_schema:
       type: array
+  - handle: title
+    json_schema:
+      type: string
+    value:
+    nullable: true
   - handle: x_column
     description: Input
     json_schema:

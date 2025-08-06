@@ -4,7 +4,19 @@ nodes:
     inputs_from:
       - handle: input
         value:
-          - /oomol-driver/desktop/table/data_oomol.csv
+          - /oomol-driver/desktop/table/all_seasons.csv
       - handle: instruction
-        value: 分析一下亚洲幸福指数最高的 10 个国家
+        value: 生涯正负值效率最高的十个球员，从高到低排序
+      - handle: x_axis_name
+        value: null
+      - handle: llm_model
+        value:
+          model: openai/gpt-4.1
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+      - handle: y_axis_name
+        value: null
+      - handle: code_repair_attempts
+        value: null
     subflow: self::ai-data-analysis

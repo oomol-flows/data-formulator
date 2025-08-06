@@ -8,7 +8,7 @@ Outputs = typing.Dict[str, typing.Any]
 from oocana.preview import TextPreviewPayload
 from oocana import Context
 
-def main(params: Inputs, context: Context) -> None:
+def main(params: Inputs, context: Context) -> Outputs:
 
     payload=dict(
         type= "text/python",
