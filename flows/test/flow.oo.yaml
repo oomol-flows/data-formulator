@@ -20,3 +20,8 @@ nodes:
       - handle: code_repair_attempts
         value: null
     subflow: self::ai-data-analysis
+  - node_id: test#3
+    inputs_from:
+      - handle: input2
+        value: /oomol-driver/desktop/table/data_oomol.csv
+    subflow: self::read-table

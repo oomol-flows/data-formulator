@@ -36,7 +36,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     candidates = [c['content'] for c in candidates if c['status'] == 'ok']
     
     context.preview(TextPreviewPayload(
-        type= "text",
+        type= "markdown",
         data= candidates[0]["data summary"]
     ))
     return { "summary": candidates[0]["data summary"], "fields_schema": candidates[0]["fields"] }

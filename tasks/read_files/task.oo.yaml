@@ -11,7 +11,7 @@ inputs_def:
   - handle: enable_preview
     json_schema:
       type: boolean
-    value: false
+    value: true
 outputs_def:
   - handle: output
     description: Output
