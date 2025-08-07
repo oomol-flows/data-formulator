@@ -58,7 +58,7 @@ nodes:
         from_flow:
           - input_handle: input
       - handle: enable_preview
-        value: true
+        value: false
     description: |-
       传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
       文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
@@ -109,7 +109,7 @@ nodes:
       - handle: template
         value:
           - role: user
-            content: "将{{input}}内容翻译为{{language}}"
+            content: "使用{{language}}输出{{input}}内容"
         schema_overrides:
           - schema:
               type: array
@@ -242,6 +242,7 @@ inputs_def:
     nullable: false
     executor_name: python
   - group: Group
+    collapsed: true
   - handle: x_axis_name
     json_schema:
       type: string
@@ -253,12 +254,12 @@ inputs_def:
       ui:options:
         title: Model
       ui:widget: llm::model
-    nullable: false
     value:
       model: openai/gpt-4.1
       temperature: 0
       top_p: 0.5
       max_tokens: 4096
+    nullable: false
     executor_name: python
   - handle: y_axis_name
     json_schema:
@@ -269,8 +270,8 @@ inputs_def:
   - handle: code_repair_attempts
     json_schema:
       type: integer
-    nullable: true
     value:
+    nullable: true
     executor_name: python
 outputs_def:
   - handle: output
@@ -287,6 +288,5 @@ icon: ":twemoji:brain:"
 title: AI Data Analysis
 forward_previews:
   - result_chart#1
-  - read_files#1
   - markdown_text_preview#1
 description: 输入一组 csv 或者 xlsx 格式的文件地址，获得图标和分析思路的文字内容
