@@ -12,7 +12,8 @@ dependencies = [
     "openpyxl (==3.1.5)",
     "openai (==1.72.0)",
     "litellm (==1.65.4.post1)",
-    "plotly (==6.0.1)"
+    "plotly (==6.0.1)",
+    "statsmodels (>=0.14.5,<0.15.0)"
 ]
 
 

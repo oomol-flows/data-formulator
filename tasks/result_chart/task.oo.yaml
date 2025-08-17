@@ -10,18 +10,42 @@ inputs_def:
     value:
     nullable: true
   - handle: x_column
-    description: Input
+    description: 横轴列名
     json_schema:
       type: string
     value:
     nullable: true
   - handle: y_column
+    description: 纵轴列名
     json_schema:
       type: string
     value:
     nullable: true
+  - handle: chart_type
+    description: 图表类型，留空自动选择
+    json_schema:
+      type: string
+      enum:
+        - bar
+        - line
+        - scatter
+        - pie
+        - histogram
+        - box
+    value: pie
 outputs_def:
-  []
+  - handle: status
+    json_schema:
+      type: string
+  - handle: chart_type
+    json_schema:
+      type: string
+  - handle: columns_used
+    json_schema:
+      type: array
+  - handle: data_points
+    json_schema:
+      type: number
 executor:
   name: python
   options:

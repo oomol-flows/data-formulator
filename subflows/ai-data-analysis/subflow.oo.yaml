@@ -82,6 +82,11 @@ nodes:
         from_node:
           - node_id: llm#2
             output_handle: title
+      - handle: chart_type
+        value: ""
+        from_node:
+          - node_id: llm#2
+            output_handle: chart_type
   - node_id: code_preview#1
     task: self::code_preview
     inputs_from:
@@ -173,7 +178,9 @@ nodes:
 
               2. 阅读{{instruction}}内容，判断作者使用的语言
 
-              3. 根据意图生产一个合适的图标名称\n"
+              3. 根据意图生产一个合适的图表的名称
+
+              4. 根据意图选择一个合适的表格类型\n"
         schema_overrides:
           - schema:
               type: array
@@ -223,6 +230,16 @@ nodes:
       - handle: language
         json_schema:
           type: string
+      - handle: chart_type
+        json_schema:
+          type: string
+          enum:
+            - bar
+            - line
+            - scatter
+            - pie
+            - histogram
+            - box
 inputs_def:
   - handle: input
     description: Input
@@ -289,4 +306,5 @@ title: AI Data Analysis
 forward_previews:
   - result_chart#1
   - markdown_text_preview#1
+  - read_files#1
 description: 输入一组 csv 或者 xlsx 格式的文件地址，获得图标和分析思路的文字内容

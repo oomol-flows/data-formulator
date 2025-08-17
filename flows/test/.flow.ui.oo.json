@@ -1,19 +1,11 @@
 {
   "nodes": {
     "ai-data-analysis#1": {
-      "contentWidth": 1115.0567292338042,
+      "contentWidth": 755.5517205127285,
       "rfNode": {
         "position": {
           "x": 0,
           "y": 129
-        }
-      }
-    },
-    "test#3": {
-      "rfNode": {
-        "position": {
-          "x": -593.6651609928201,
-          "y": 1073.1856743235435
         }
       }
     }
