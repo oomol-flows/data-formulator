@@ -6,7 +6,7 @@ nodes:
         value:
           - /oomol-driver/oomol-storage/Project 1 - Weather Dataset.csv
       - handle: instruction
-        value: "各种不同类型的天气占比"
+        value: "常见的天气天数占比"
       - handle: x_axis_name
         value: null
       - handle: llm_model

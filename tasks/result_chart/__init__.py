@@ -26,6 +26,8 @@ def _get_column_name(
     special_cases: dict
 ) -> str:
     """获取有效的列名，处理特殊情况和默认值"""
+    if not available_cols:
+        raise ValueError("数据中没有可用列")
     
     # 处理特殊请求
     if requested_col and requested_col in special_cases:
@@ -38,10 +40,7 @@ def _get_column_name(
     # 根据位置选择默认列
     if position < len(available_cols):
         default_col = available_cols[position]
-        if requested_col:
-            print(f"列 '{requested_col}' 不存在，使用 '{default_col}' 替代")
-        else:
-            print(f"使用第 {position + 1} 列 '{default_col}' 作为默认值")
+        # 使用默认列
         return default_col
     
     raise ValueError(f"数据中没有足够的列，至少需要 {position + 1} 列")
@@ -65,7 +64,8 @@ def _prepare_dataframe(df: pd.DataFrame, x_col: str, y_col: str) -> tuple[pd.Dat
 def _determine_chart_type(df: pd.DataFrame, x_col: str, y_col: str, requested_type: Optional[str]) -> str:
     """根据数据特征和分析需求确定图表类型"""
     
-    if requested_type and requested_type in ['bar', 'line', 'scatter', 'pie', 'histogram', 'box', 'area', 'radar', 'heatmap', 'violin', 'bubble']:
+    valid_chart_types = ['bar', 'line', 'scatter', 'pie', 'histogram', 'box', 'area', 'radar', 'heatmap', 'violin', 'bubble']
+    if requested_type and requested_type in valid_chart_types:
         return requested_type
     
     # 自动分析数据特征
@@ -199,34 +199,36 @@ def main(params: Inputs, context: Context) -> Outputs:
     # 使用 context 参数避免未使用警告
     _ = context
     try:
-        # 调试输入参数
-        print("== result_chart 输入参数调试 ===")
-        print(f"输入参数类型: {type(params)}")
-        print(f"输入参数内容: {params}")
+        # 验证输入参数
+        if not params:
+            raise ValueError("输入参数为空")
         
         # 检查 data 字段
         data_input = params.get("data")
-        print(f"data 字段类型: {type(data_input)}")
-        print(f"data 字段内容: {data_input}")
         
         if data_input is None:
-            raise ValueError("data 字段为 None，可能是上游任务未正确输出数据")
+            raise ValueError("数据为空，可能是上游任务未正确输出数据")
         
         if not isinstance(data_input, list):
-            raise ValueError(f"data 字段应为列表类型，实际为: {type(data_input)}")
+            raise ValueError(f"数据格式错误，应为列表类型，实际为: {type(data_input)}")
         
         if len(data_input) == 0:
-            raise ValueError("data 字段为空列表，没有可处理的数据")
+            raise ValueError("数据为空，没有可处理的内容")
         
         # 参数准备
         title = params.get("title") or "分析结果"
-        df = pd.DataFrame(data_input)
+        
+        try:
+            df = pd.DataFrame(data_input)
+        except Exception as e:
+            raise ValueError(f"数据转换失败: {str(e)}")
         
         if df.empty:
-            raise ValueError("转换为 DataFrame 后数据为空")
+            raise ValueError("转换后的数据为空")
         
         available_columns = df.columns.tolist()
-        print(f"可用列: {available_columns}")
+        if not available_columns:
+            raise ValueError("数据中没有可用列")
         
         # 获取有效的列名
         x_column = _get_column_name(
@@ -248,15 +250,17 @@ def main(params: Inputs, context: Context) -> Outputs:
             df, x_column, y_column, params.get("chart_type")
         )
         
-        print(f"图表类型: {chart_type}, x_column: {x_column}, y_column: {y_column}")
+        # 生成图表
         
         # 准备数据
         df, final_x_col, final_y_col = _prepare_dataframe(df, x_column, y_column)
         
         # 创建图表
-        fig = _create_chart(df, chart_type, final_x_col, final_y_col, title)
-        
-        fig.show()
+        try:
+            fig = _create_chart(df, chart_type, final_x_col, final_y_col, title)
+            fig.show()
+        except Exception as e:
+            raise RuntimeError(f"图表创建失败: {str(e)}")
         
         return {
             "status": "success", 
@@ -266,5 +270,4 @@ def main(params: Inputs, context: Context) -> Outputs:
         }
         
     except Exception as e:
-        print(f"创建图表时出错: {str(e)}")
         raise

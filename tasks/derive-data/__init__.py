@@ -24,9 +24,11 @@ from oocana import Context
 def _validate_inputs(params: Inputs) -> None:
     """验证输入参数"""
     if not params.get("data"):
-        raise ValueError("No data provided")
+        raise ValueError("未提供数据")
     if not params.get("instruction"):
-        raise ValueError("No instruction provided")
+        raise ValueError("未提供指令")
+    if not isinstance(params["data"], list):
+        raise ValueError("数据格式错误，应为列表类型")
 
 def _create_llm_client(params: Inputs, context: Context) -> Client:
     """创建 LLM 客户端"""
@@ -41,25 +43,28 @@ def _create_llm_client(params: Inputs, context: Context) -> Client:
 def _process_data_with_repair(agent, input_tables: list, instruction: str, 
                              expected_fields: list, max_attempts: int) -> dict:
     """处理数据转换并自动修复错误"""
-    results = agent.run(input_tables, instruction, expected_fields, [], max_attempts)
-    
-    repair_attempts = 0
-    while results[0]['status'] == 'error' and repair_attempts < max_attempts:
-        print(f"== Code error, attempt {repair_attempts + 1}/{max_attempts} ===")
-        error_message = results[0]['content']
-        repair_instruction = (
-            f"We encountered the following error:\n\n{error_message}\n\n"
-            "Please analyze the error and fix the code to prevent similar issues."
-        )
+    try:
+        results = agent.run(input_tables, instruction, expected_fields, [], max_attempts)
         
-        prev_dialog = results[0]['dialog']
-        results = agent.followup(input_tables, prev_dialog, expected_fields, repair_instruction)
-        repair_attempts += 1
-    
-    if results[0]['status'] == 'error':
-        raise RuntimeError(f"Failed to generate valid code after {max_attempts} attempts")
-    
-    return results[0]
+        repair_attempts = 0
+        while results[0]['status'] == 'error' and repair_attempts < max_attempts:
+            # 代码错误，尝试修复
+            error_message = results[0]['content']
+            repair_instruction = (
+                f"遇到以下错误：\n\n{error_message}\n\n"
+                "请分析错误并修复代码以防止类似问题。"
+            )
+            
+            prev_dialog = results[0]['dialog']
+            results = agent.followup(input_tables, prev_dialog, expected_fields, repair_instruction)
+            repair_attempts += 1
+        
+        if results[0]['status'] == 'error':
+            raise RuntimeError(f"经过 {max_attempts} 次尝试后仍无法生成有效代码")
+        
+        return results[0]
+    except Exception as e:
+        raise RuntimeError(f"数据处理失败: {str(e)}")
 
 def _determine_axis_names(result: dict, x_axis_name: str | None, y_axis_name: str | None) -> tuple[str, str]:
     """确定轴名称"""
@@ -108,14 +113,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     # 构建预期字段列表
     expected_fields = [name for name in [x_axis_name, y_axis_name] if name is not None]
     
-    print("== Input Tables ===")
-    for table in input_tables:
-        print(f"Table: {table['name']} (first 5 rows)")
-        print(table['rows'][:5])
-    
-    print(f"== User Specification ===")
-    print(f"Expected fields: {expected_fields}")
-    print(f"Instruction: {instruction}")
+    # 处理输入数据
     
     # 创建数据转换代理并处理
     agent = DataTransformationAgentV2(client=llm_client)
