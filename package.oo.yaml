@@ -1,10 +1,10 @@
-version: 0.1.11
+version: 0.1.12
 scripts:
   bootstrap: |
     npm install
     poetry install --no-root
 dependencies:
-  llm: 0.3.3
+  llm: 0.3.4
   oomol-preview: 0.1.0
 icon: ./icon.png
 name: data-formulator

@@ -278,9 +278,9 @@ inputs_def:
       ui:widget: llm::model
     value:
       model: openai/gpt-4.1
-      temperature: 0
+      temperature: 0.63
       top_p: 0.5
-      max_tokens: 4096
+      max_tokens: 1000000
     nullable: false
     executor_name: python
   - handle: y_axis_name
