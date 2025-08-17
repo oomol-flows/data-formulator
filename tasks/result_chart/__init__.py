@@ -5,7 +5,7 @@ class Inputs(typing.TypedDict):
     title: str | None
     x_column: str | None
     y_column: str | None
-    chart_type: typing.Literal["bar", "line", "scatter", "pie", "histogram", "box"]
+    chart_type: typing.Literal["bar", "line", "scatter", "pie", "histogram", "box", "area", "radar", "heatmap", "violin", "bubble"]
 class Outputs(typing.TypedDict):
     status: str
     chart_type: str
@@ -16,6 +16,7 @@ class Outputs(typing.TypedDict):
 from oocana import Context
 import pandas as pd
 import plotly.express as px
+import numpy as np
 from typing import Optional, List
 
 def _get_column_name(
@@ -64,7 +65,7 @@ def _prepare_dataframe(df: pd.DataFrame, x_col: str, y_col: str) -> tuple[pd.Dat
 def _determine_chart_type(df: pd.DataFrame, x_col: str, y_col: str, requested_type: Optional[str]) -> str:
     """根据数据特征和分析需求确定图表类型"""
     
-    if requested_type and requested_type in ['bar', 'line', 'scatter', 'pie', 'histogram', 'box']:
+    if requested_type and requested_type in ['bar', 'line', 'scatter', 'pie', 'histogram', 'box', 'area', 'radar', 'heatmap', 'violin', 'bubble']:
         return requested_type
     
     # 自动分析数据特征
@@ -127,6 +128,65 @@ def _create_chart(df: pd.DataFrame, chart_type: str, x_col: str, y_col: str, tit
             fig = px.box(df, x=x_col, y=y_col, title=title)
         else:
             fig = px.box(df, y=x_col, title=title)
+    elif chart_type == 'area':
+        fig = px.area(
+            df, x=x_col, y=y_col, title=title,
+            line_shape='linear', markers=True
+        )
+    elif chart_type == 'violin':
+        if y_col and pd.api.types.is_numeric_dtype(df[y_col]):
+            fig = px.violin(df, x=x_col, y=y_col, title=title, box=True)
+        else:
+            fig = px.violin(df, y=x_col, title=title, box=True)
+    elif chart_type == 'bubble':
+        # 气泡图需要至少3个数值列，使用第三列作为气泡大小
+        numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+        if len(numeric_cols) >= 3 and y_col in numeric_cols:
+            size_col = [col for col in numeric_cols if col not in [x_col, y_col]][0]
+            fig = px.scatter(
+                df, x=x_col, y=y_col, size=size_col, title=title,
+                hover_data=df.columns.tolist(),
+                color=x_col if len(df[x_col].unique()) < 10 else None
+            )
+        else:
+            # 如果不足3个数值列，退化为普通散点图
+            fig = px.scatter(df, x=x_col, y=y_col, title=title)
+    elif chart_type == 'heatmap':
+        # 热力图需要数值数据
+        numeric_df = df.select_dtypes(include=[np.number])
+        if numeric_df.shape[1] >= 2:
+            # 计算相关性矩阵
+            corr_matrix = numeric_df.corr()
+            fig = px.imshow(
+                corr_matrix, 
+                title=title or "相关性热力图",
+                labels=dict(color="相关性"),
+                color_continuous_scale="RdBu_r",
+                aspect="auto"
+            )
+        else:
+            # 如果数据不足，创建二维热力图
+            fig = px.density_heatmap(
+                df, x=x_col, y=y_col, title=title,
+                marginal_x="histogram", marginal_y="histogram"
+            )
+    elif chart_type == 'radar':
+        # 雷达图需要数值数据，且适合多维度对比
+        numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+        if len(numeric_cols) >= 3:
+            # 使用平均值创建雷达图
+            avg_values = df[numeric_cols].mean()
+            fig = px.line_polar(
+                r=avg_values.values, theta=avg_values.index,
+                line_close=True, title=title
+            )
+            fig.update_traces(fill='toself')
+        else:
+            # 如果数据不足，创建简单的雷达图
+            fig = px.line_polar(
+                df, r=y_col, theta=x_col, line_close=True, title=title
+            )
+            fig.update_traces(fill='toself')
     else:
         # 默认柱状图
         fig = px.bar(df, x=x_col, y=y_col, title=title)

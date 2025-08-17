@@ -1,11 +1,18 @@
 {
   "nodes": {
     "ai-data-analysis#1": {
-      "contentWidth": 755.5517205127285,
+      "contentWidth": 795.2587517627285,
       "rfNode": {
         "position": {
           "x": 0,
           "y": 129
+        }
+      },
+      "sections": {
+        "preview": {
+          "markdown_text_preview#1-25821584-_:oo-preview:_": {
+            "previewHeight": 340.734375
+          }
         }
       }
     }

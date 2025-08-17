@@ -240,6 +240,11 @@ nodes:
             - pie
             - histogram
             - box
+            - area
+            - radar
+            - heatmap
+            - violin
+            - bubble
 inputs_def:
   - handle: input
     description: Input

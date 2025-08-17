@@ -21,89 +21,121 @@ from data_formulator.agents.agent_data_transform_v2 import DataTransformationAge
 from data_formulator.agents.client_utils import Client
 from oocana import Context
 
-def main(params: Inputs, context: Context) -> Outputs:
-    input_tables = params.get("data", [])
-    instruction = params.get("instruction", "")
+def _validate_inputs(params: Inputs) -> None:
+    """验证输入参数"""
+    if not params.get("data"):
+        raise ValueError("No data provided")
+    if not params.get("instruction"):
+        raise ValueError("No instruction provided")
 
-    # 处理可选参数，设置默认值
-    max_repair_attempts = params.get("code_repair_attempts") or 3
-    x_axis_name = params.get("x_axis_name")
-    y_axis_name = params.get("y_axis_name")
-    my_llm_model = params.get("llm_model")
-    
-    if len(input_tables) == 0:
-        raise Exception("No data rows found")
-    llm_client: Client = Client(
+def _create_llm_client(params: Inputs, context: Context) -> Client:
+    """创建 LLM 客户端"""
+    llm_model = params.get("llm_model", {})
+    return Client(
         endpoint="openai",
         api_base=context.oomol_llm_env.get("base_url_v1"),
-        model=my_llm_model.get("model", "oomol-chat"),
-        api_key=context.oomol_llm_env.get("api_key"),
-        # temperature=my_llm_model.get("temperature", 0.7),
-        # top_p=my_llm_model.get("top_p", 1.0),
-        # max_tokens=my_llm_model.get("max_tokens", 1200)
+        model=llm_model.get("model", "oomol-chat"),
+        api_key=context.oomol_llm_env.get("api_key")
     )
 
-    # 构建预期字段列表，过滤掉 None 值
-    expected_fields = [name for name in [x_axis_name, y_axis_name] if name is not None]
-
-    print("== input tables ===>")
-    for table in input_tables:
-        print(f"===> Table: {table['name']} (first 5 rows)")
-        print(table['rows'][:5])
-
-    print("== user spec ===")
-    print(f"Expected fields: {expected_fields}")
-    print(instruction)
-
-    agent = DataTransformationAgentV2(client=llm_client)
-    results = agent.run(input_tables, instruction, expected_fields, [], max_repair_attempts)
-
+def _process_data_with_repair(agent, input_tables: list, instruction: str, 
+                             expected_fields: list, max_attempts: int) -> dict:
+    """处理数据转换并自动修复错误"""
+    results = agent.run(input_tables, instruction, expected_fields, [], max_attempts)
+    
     repair_attempts = 0
-    while results[0]['status'] == 'error' and repair_attempts < max_repair_attempts: # try up to n times
-        print("== code wrong, try repaire ===")
+    while results[0]['status'] == 'error' and repair_attempts < max_attempts:
+        print(f"== Code error, attempt {repair_attempts + 1}/{max_attempts} ===")
         error_message = results[0]['content']
-        new_instruction = f"We run into the following problem executing the code, please fix it:\n\n{error_message}\n\nPlease think step by step, reflect why the error happens and fix the code so that no more errors would occur."
-
+        repair_instruction = (
+            f"We encountered the following error:\n\n{error_message}\n\n"
+            "Please analyze the error and fix the code to prevent similar issues."
+        )
+        
         prev_dialog = results[0]['dialog']
-
-        # 加上上一次的运行结果，加上修复 prompt 重新运行一次
-        results = agent.followup(input_tables, prev_dialog, expected_fields, new_instruction)
+        results = agent.followup(input_tables, prev_dialog, expected_fields, repair_instruction)
         repair_attempts += 1
+    
+    if results[0]['status'] == 'error':
+        raise RuntimeError(f"Failed to generate valid code after {max_attempts} attempts")
+    
+    return results[0]
 
-    res = results[0]
-    if res is not None:
-        code = res['code']
-        content = res['content']
-        
-        # 处理可选的轴名称，从 refined_goal 中获取实际的可视化字段
-        visualization_fields = res['refined_goal']['visualization_fields']
-        
-        # 根据原始输入和 AI 推荐的字段确定最终的轴名称
-        if len(visualization_fields) >= 2:
-            refined_x_axis_name = visualization_fields[0]
-            refined_y_axis_name = visualization_fields[1]
-        elif len(visualization_fields) == 1:
-            # 如果只有一个字段，根据原始输入决定它是 x 轴还是 y 轴
-            if x_axis_name is not None:
-                refined_x_axis_name = visualization_fields[0]
-                refined_y_axis_name = y_axis_name or "count"  # 提供默认的 y 轴
-            else:
-                refined_x_axis_name = x_axis_name or visualization_fields[0]  # 使用可视化字段而不是 index
-                refined_y_axis_name = "count"  # 提供默认的 y 轴用于计数
-        else:
-            # 如果没有可视化字段，检查数据中实际存在的列
-            if content and len(content) > 0:
-                # 获取数据中的第一个可用列作为 x 轴
-                available_columns = list(content[0].keys()) if isinstance(content[0], dict) else []
-                refined_x_axis_name = x_axis_name or (available_columns[0] if available_columns else "index")
-                refined_y_axis_name = y_axis_name or "count"
-            else:
-                refined_x_axis_name = x_axis_name or "index"
-                refined_y_axis_name = y_axis_name or "count"
+def _determine_axis_names(result: dict, x_axis_name: str | None, y_axis_name: str | None) -> tuple[str, str]:
+    """确定轴名称"""
+    visualization_fields = result.get('refined_goal', {}).get('visualization_fields', [])
+    content = result.get('content', [])
+    
+    # 获取数据中可用的列
+    available_columns = []
+    if content and isinstance(content[0], dict):
+        available_columns = list(content[0].keys())
+    
+    # 确定 x 轴名称
+    if x_axis_name:
+        refined_x = x_axis_name
+    elif visualization_fields:
+        refined_x = visualization_fields[0]
+    elif available_columns:
+        refined_x = available_columns[0]
     else:
-        raise Exception("No results found")
+        refined_x = "index"
+    
+    # 确定 y 轴名称
+    if y_axis_name:
+        refined_y = y_axis_name
+    elif len(visualization_fields) >= 2:
+        refined_y = visualization_fields[1]
+    else:
+        refined_y = "count"
+    
+    return refined_x, refined_y
 
+def main(params: Inputs, context: Context) -> Outputs:
+    # 验证输入参数
+    _validate_inputs(params)
+    
+    # 提取参数
+    input_tables = params["data"]
+    instruction = params["instruction"]
+    max_repair_attempts = params.get("code_repair_attempts", 3)
+    x_axis_name = params.get("x_axis_name")
+    y_axis_name = params.get("y_axis_name")
+    
+    # 创建 LLM 客户端
+    llm_client = _create_llm_client(params, context)
+    
+    # 构建预期字段列表
+    expected_fields = [name for name in [x_axis_name, y_axis_name] if name is not None]
+    
+    print("== Input Tables ===")
+    for table in input_tables:
+        print(f"Table: {table['name']} (first 5 rows)")
+        print(table['rows'][:5])
+    
+    print(f"== User Specification ===")
+    print(f"Expected fields: {expected_fields}")
+    print(f"Instruction: {instruction}")
+    
+    # 创建数据转换代理并处理
+    agent = DataTransformationAgentV2(client=llm_client)
+    result = _process_data_with_repair(agent, input_tables, instruction, expected_fields, max_repair_attempts)
+    
+    # 提取结果
+    code = result['code']
+    content = result['content']
+    
+    # 确定轴名称
+    refined_x_axis_name, refined_y_axis_name = _determine_axis_names(result, x_axis_name, y_axis_name)
+    
+    # 生成代码解释
     code_expl_agent = CodeExplanationAgent(client=llm_client)
-    expl = code_expl_agent.run(input_tables, code)
-
-    return { "code_for_derive": code, "code_explain": expl, "content": content, "refined_x_axis_name": refined_x_axis_name, "refined_y_axis_name": refined_y_axis_name } 
+    code_explain = code_expl_agent.run(input_tables, code)
+    
+    return {
+        "code_for_derive": code,
+        "code_explain": code_explain,
+        "content": content,
+        "refined_x_axis_name": refined_x_axis_name,
+        "refined_y_axis_name": refined_y_axis_name
+    } 

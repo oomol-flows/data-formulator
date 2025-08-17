@@ -32,6 +32,11 @@ inputs_def:
         - pie
         - histogram
         - box
+        - area
+        - radar
+        - heatmap
+        - violin
+        - bubble
     value: pie
 outputs_def:
   - handle: status
