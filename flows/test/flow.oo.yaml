@@ -4,9 +4,9 @@ nodes:
     inputs_from:
       - handle: input
         value:
-          - /oomol-driver/oomol-storage/college_student_placement_dataset.csv
+          - /oomol-driver/oomol-storage/Project 1 - Weather Dataset.csv
       - handle: instruction
-        value: 画一个学生 智商分布柱状图
+        value: 各种天气的占比
       - handle: x_axis_name
         value: null
       - handle: llm_model

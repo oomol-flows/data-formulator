@@ -1,11 +1,18 @@
 {
   "nodes": {
     "ai-data-analysis#1": {
-      "contentWidth": 791.0804935725583,
+      "contentWidth": 1171.4682621418501,
       "rfNode": {
         "position": {
-          "x": 0,
-          "y": 129
+          "x": -356.9308429750309,
+          "y": 314.8621013773978
+        }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "Group": true
+          }
         }
       }
     }
