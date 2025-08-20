@@ -39,7 +39,7 @@ jobs:
 
     uses: oomol/ovmlayer-rootfs/.github/workflows/export-package-layer.yml@main
     with:
-      package-name: "layer-example"
+      package-name: data-formulator
       version: "${{ needs.get-version.outputs.version }}"
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
