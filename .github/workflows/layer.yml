@@ -30,22 +30,9 @@ jobs:
               echo "No valid package file found"
               exit 1
             fi
-  
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-      - name: Install oopm
-        run: npm install -g oopm
-      - name: Publish OOMOL Package
-        uses: oomol-lab/oopm-publish-action@main
       
-
   export-layer:
-    needs: [get-version, publish]
+    needs: [get-version]
     permissions:
       contents: read
       id-token: write
