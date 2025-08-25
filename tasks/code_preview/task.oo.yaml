@@ -16,3 +16,4 @@ title: Code preview
 description: 预览自动生成的代码
 icon: ":carbon:ibm-watsonx-code-assistant-for-z-refactor:"
 tool: true
+private: true
