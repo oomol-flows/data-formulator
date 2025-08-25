@@ -52,11 +52,14 @@ nodes:
   - node_id: read_files#1
     task: self::read_files
     inputs_from:
-      - handle: input
+      - handle: tables
         value:
           []
         from_flow:
-          - input_handle: input
+          []
+        from_node:
+          - node_id: +python#1
+            output_handle: tables
       - handle: enable_preview
         value: false
     description: |-
@@ -245,16 +248,42 @@ nodes:
             - heatmap
             - violin
             - bubble
+  - node_id: +python#1
+    title: "Python #1"
+    icon: ":logos:python:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: table
+          json_schema:
+            type: string
+            ui:widget: file
+          nullable: false
+          description: Input
+      outputs_def:
+        - handle: tables
+          json_schema:
+            type: array
+            items:
+              type: string
+              ui:widget: file
+          nullable: false
+          description: Input
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#1.py
+    inputs_from:
+      - handle: table
+        from_flow:
+          - input_handle: table
 inputs_def:
-  - handle: input
+  - handle: table
     description: Input
     json_schema:
-      type: array
-      items:
-        type: string
-        ui:widget: file
-    value:
-      []
+      type: string
+      ui:widget: file
     nullable: false
     executor_name: python
   - handle: instruction

@@ -1,7 +1,7 @@
 ui:
   default_width: 450
 inputs_def:
-  - handle: input
+  - handle: tables
     description: Input
     json_schema:
       type: array
@@ -35,3 +35,4 @@ description: |-
   传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
   文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
 icon: ":carbon:port-input:"
+private: true

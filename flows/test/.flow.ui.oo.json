@@ -10,6 +10,11 @@
       },
       "sections": {
         "inputs": {
+          "collapsed": {
+            "instruction": {
+              "[]": false
+            }
+          },
           "groupCollapsed": {
             "Group": true
           }

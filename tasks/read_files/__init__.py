@@ -8,7 +8,7 @@ from oocana import Context
 #region generated meta
 import typing
 class Inputs(typing.TypedDict):
-    input: list[str]
+    tables: list[str]
     enable_preview: bool
 class Outputs(typing.TypedDict):
     output: list[dict]
@@ -76,7 +76,7 @@ def main(params: Inputs, context: Context) -> Outputs:
         if not params:
             return {"output": []}
         
-        input_files: List[str] = params.get("input", [])
+        input_files: List[str] = params.get("tables", [])
         enable_preview: bool = params.get("enable_preview", False)
         
         if not input_files:

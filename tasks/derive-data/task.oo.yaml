@@ -68,3 +68,4 @@ description: |-
   会输出自动生成的代码和代码解释
 icon: ":carbon:ibm-application-and-discovery-delivery-intelligence:"
 additional_inputs: false
+private: true

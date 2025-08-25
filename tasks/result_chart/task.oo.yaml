@@ -59,3 +59,4 @@ executor:
 title: Result Chart
 description: 结果表格
 icon: ":carbon:chart-average:"
+private: true

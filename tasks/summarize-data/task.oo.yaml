@@ -24,3 +24,4 @@ description: |-
   data_summary： 生成的文件总结
   fields: 从文件中提取的字段
 icon: ":carbon:report:"
+private: true
