@@ -1,100 +1,66 @@
 {
   "nodes": {
     "derive-data#1": {
-      "contentWidth": 471.97512306747035,
       "rfNode": {
         "position": {
-          "x": 1174,
-          "y": 785
-        }
-      },
-      "sections": {
-        "inputs": {
-          "collapsed": {
-            "instruction": {
-              "[]": false
-            }
-          }
+          "x": 0,
+          "y": 0
         }
       }
     },
     "read_files#1": {
-      "contentWidth": 618.3167167376193,
       "rfNode": {
         "position": {
-          "x": 398.66923663867897,
-          "y": 505.8839968613936
+          "x": 600,
+          "y": 0
         }
       }
     },
     "result_chart#1": {
-      "contentWidth": 792.4690143528081,
       "rfNode": {
         "position": {
-          "x": 1950.5777272206583,
-          "y": 377
+          "x": 1200,
+          "y": 0
         }
       }
     },
     "code_preview#1": {
       "rfNode": {
         "position": {
-          "x": 2217.7106714977026,
-          "y": 1247.25
+          "x": 1800,
+          "y": 0
         }
       }
     },
     "llm-chat#1": {
       "rfNode": {
         "position": {
-          "x": 1898,
-          "y": 1617
-        }
-      },
-      "sections": {
-        "inputs": {
-          "groupCollapsed": {
-            "Connection": true
-          }
+          "x": 2400,
+          "y": 0
         }
       }
     },
     "markdown_text_preview#1": {
-      "contentWidth": 450,
       "rfNode": {
         "position": {
-          "x": 2570,
-          "y": 1481.5
+          "x": 3000,
+          "y": 0
         }
       }
     },
     "llm#2": {
-      "contentWidth": 622.0622947511232,
       "rfNode": {
         "position": {
-          "x": 486,
-          "y": 1001.25
-        }
-      },
-      "sections": {
-        "inputs": {
-          "collapsed": {
-            "messages": {
-              "[]": false
-            }
-          },
-          "groupCollapsed": {
-            "Connection": true
-          }
+          "x": 3600,
+          "y": 0
         }
       }
     },
     "+python#1": {
-      "contentWidth": 450,
       "rfNode": {
         "position": {
-          "x": -177.39217891323398,
-          "y": 771.4978567713309
+          "x": 4200,
+          "y": 0
         }
       }
     }
