@@ -10,19 +10,19 @@ inputs_def:
     value:
     nullable: true
   - handle: x_column
-    description: 横轴列名
+    description: Column name for the x-axis
     json_schema:
       type: string
     value:
     nullable: true
   - handle: y_column
-    description: 纵轴列名
+    description: Column name for the y-axis
     json_schema:
       type: string
     value:
     nullable: true
   - handle: chart_type
-    description: 图表类型，留空自动选择
+    description: Chart type, leave empty for auto selection
     json_schema:
       type: string
       enum:
@@ -57,6 +57,7 @@ executor:
     entry: __init__.py
     spawn: false
 title: Result Chart
-description: 结果表格
+description: Create interactive charts and visualizations from processed data
+  with customizable axes and titles
 icon: ":carbon:chart-average:"
 private: true

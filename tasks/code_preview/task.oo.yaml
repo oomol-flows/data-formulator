@@ -13,7 +13,8 @@ executor:
     entry: __init__.py
     spawn: false
 title: Code preview
-description: 预览自动生成的代码
+description: Preview and display automatically generated Python code for data
+  analysis and visualization
 icon: ":carbon:ibm-watsonx-code-assistant-for-z-refactor:"
 tool: true
 private: true

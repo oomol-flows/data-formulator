@@ -31,8 +31,7 @@ executor:
     entry: __init__.py
     spawn: false
 title: Read Files
-description: |-
-  传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。
-  文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件
+description: Read and preview CSV or Excel files from local storage with
+  optional data preview functionality
 icon: ":carbon:port-input:"
 private: true

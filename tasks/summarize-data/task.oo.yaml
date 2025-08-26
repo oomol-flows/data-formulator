@@ -1,3 +1,5 @@
+description: Generate comprehensive summary statistics and data insights for
+  tabular datasets
 executor:
   name: python
   options:
@@ -17,11 +19,5 @@ outputs_def:
     json_schema:
       type: array
 title: " Summarize data"
-description: |-
-  使用 ai 分析用户输入的文件数据，生成总结和数据结构
-
-  file_path: 需要处理的文件路径
-  data_summary： 生成的文件总结
-  fields: 从文件中提取的字段
 icon: ":carbon:report:"
 private: true

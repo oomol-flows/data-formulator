@@ -62,10 +62,8 @@ outputs_def:
     json_schema:
       type: string
 title: Derive data
-description: |-
-  根据用户要求从现有数据中提取符合要求的内容
-  ai 会生成代码并运行，然后达到用户的要求
-  会输出自动生成的代码和代码解释
+description: Transform and derive new data insights from existing datasets using
+  AI-powered analysis and custom calculations
 icon: ":carbon:ibm-application-and-discovery-delivery-intelligence:"
 additional_inputs: false
 private: true

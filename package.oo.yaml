@@ -1,4 +1,4 @@
-version: 0.1.17
+version: 0.1.18
 scripts:
   bootstrap: |
     npm install
@@ -11,4 +11,4 @@ name: data-formulator
 description: Translate structured data into charts based on user-defined goals.
 displayName: Data Formulator
 repository: https://github.com/oomol-flows/data-formulator
-releaseNotes: update version
+releaseNotes: description

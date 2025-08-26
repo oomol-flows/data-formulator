@@ -1,3 +1,6 @@
+description: Comprehensive AI-powered data analysis subflow that processes
+  datasets, generates insights, and creates visualizations based on natural
+  language instructions
 nodes:
   - task: self::derive-data
     title: Derive data
