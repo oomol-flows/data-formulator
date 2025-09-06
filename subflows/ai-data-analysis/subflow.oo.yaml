@@ -339,6 +339,4 @@ icon: ":twemoji:brain:"
 title: AI Data Analysis
 forward_previews:
   - result_chart#1
-  - markdown_text_preview#1
-  - read_files#1
 description: 输入一组 csv 或者 xlsx 格式的文件地址，获得图标和分析思路的文字内容

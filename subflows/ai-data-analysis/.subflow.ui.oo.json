@@ -3,63 +3,63 @@
     "derive-data#1": {
       "rfNode": {
         "position": {
-          "x": 0,
-          "y": 0
+          "x": 1458,
+          "y": 402.5
         }
       }
     },
     "read_files#1": {
       "rfNode": {
         "position": {
-          "x": 600,
-          "y": 0
+          "x": 972,
+          "y": 183.5
         }
       }
     },
     "result_chart#1": {
       "rfNode": {
         "position": {
-          "x": 1200,
-          "y": 0
+          "x": 2088.0766064229833,
+          "y": -114.21860921558458
         }
       }
     },
     "code_preview#1": {
       "rfNode": {
         "position": {
-          "x": 1800,
-          "y": 0
+          "x": 1944,
+          "y": 625.25
         }
       }
     },
     "llm-chat#1": {
       "rfNode": {
         "position": {
-          "x": 2400,
-          "y": 0
+          "x": 1944,
+          "y": 1233.25
         }
       }
     },
     "markdown_text_preview#1": {
       "rfNode": {
         "position": {
-          "x": 3000,
-          "y": 0
+          "x": 2430,
+          "y": 1475.25
         }
       }
     },
     "llm#2": {
       "rfNode": {
         "position": {
-          "x": 3600,
-          "y": 0
+          "x": 972,
+          "y": 698
         }
       }
     },
     "+python#1": {
       "rfNode": {
         "position": {
-          "x": 4200,
+          "x": 486,
           "y": 0
         }
       }
@@ -69,8 +69,8 @@
     "input": {
       "rfNode": {
         "position": {
-          "x": -773.9405565571778,
-          "y": 1184.1433311583473
+          "x": 0,
+          "y": 926.25
         }
       },
       "sections": {
@@ -84,8 +84,8 @@
     "output": {
       "rfNode": {
         "position": {
-          "x": 2585,
-          "y": 1922.5
+          "x": 2430,
+          "y": 1664.25
         }
       }
     }
