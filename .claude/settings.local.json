@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__oomol__runFlow",
+      "mcp__oomol__getTaskResult"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

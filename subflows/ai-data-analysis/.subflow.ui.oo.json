@@ -24,27 +24,11 @@
         }
       }
     },
-    "code_preview#1": {
-      "rfNode": {
-        "position": {
-          "x": 1944,
-          "y": 625.25
-        }
-      }
-    },
     "llm-chat#1": {
       "rfNode": {
         "position": {
           "x": 1944,
           "y": 1233.25
-        }
-      }
-    },
-    "markdown_text_preview#1": {
-      "rfNode": {
-        "position": {
-          "x": 2430,
-          "y": 1475.25
         }
       }
     },
@@ -84,8 +68,8 @@
     "output": {
       "rfNode": {
         "position": {
-          "x": 2430,
-          "y": 1664.25
+          "x": 2444.086210630833,
+          "y": 1467.4685664005076
         }
       }
     }

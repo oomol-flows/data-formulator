@@ -90,13 +90,6 @@ nodes:
         from_node:
           - node_id: llm#2
             output_handle: chart_type
-  - node_id: code_preview#1
-    task: self::code_preview
-    inputs_from:
-      - handle: input
-        from_node:
-          - node_id: derive-data#1
-            output_handle: code_for_derive
   - node_id: llm-chat#1
     title: "LLM chat #1"
     inputs_from:
@@ -144,14 +137,6 @@ nodes:
       - handle: language
         json_schema:
           type: string
-  - node_id: markdown_text_preview#1
-    title: "Markdown preview #1"
-    inputs_from:
-      - handle: text
-        from_node:
-          - node_id: llm-chat#1
-            output_handle: output
-    task: oomol-preview::markdown_text_preview
   - node_id: llm#2
     title: "LLM #2"
     inputs_from:
@@ -329,14 +314,14 @@ outputs_def:
     json_schema:
       type: string
     nullable: false
-    executor_name: nodejs
+    executor_name: python
 outputs_from:
   - handle: output
     from_node:
       - node_id: llm-chat#1
         output_handle: output
 icon: ":twemoji:brain:"
-title: AI Data Analysis
+title: "%ai-data-analysis%"
 forward_previews:
   - result_chart#1
-description: 输入一组 csv 或者 xlsx 格式的文件地址，获得图标和分析思路的文字内容
+description: "%ai-powered-data-analysis-workflow-that-automatically-processes-t%"
