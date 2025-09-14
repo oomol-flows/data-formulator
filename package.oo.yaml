@@ -7,7 +7,7 @@ dependencies:
   llm: 0.3.4
 icon: ./icon.png
 name: data-formulator
-description: Translate structured data into charts based on user-defined goals.
+description: "%transform-your-data-into-beautiful-visualizations-with-ai-powere%"
 displayName: "%data-formulator%"
 repository: https://github.com/oomol-flows/data-formulator
-releaseNotes: fix bug
+releaseNotes: update

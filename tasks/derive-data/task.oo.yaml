@@ -4,6 +4,7 @@ executor:
     entry: __init__.py
 inputs_def:
   - handle: data
+    description: "Input dataset containing tables with name and rows structure"
     json_schema:
       type: array
       items:
@@ -17,25 +18,39 @@ inputs_def:
     value:
       []
   - handle: instruction
+    description: "Natural language instruction describing the data transformation or
+      analysis to perform"
     json_schema:
       type: string
-      ui:widget: text
+      ui:widget: textarea
+      ui:options:
+        rows: 4
+        placeholder: "Describe what analysis or transformation you want to perform on
+          the data..."
   - group: Group
   - handle: x_axis_name
+    description: "Optional name for the X-axis field in visualization"
     json_schema:
       type: string
-    value:
+    value: null
     nullable: true
   - handle: y_axis_name
+    description: "Optional name for the Y-axis field in visualization"
     json_schema:
       type: string
-    value:
+    value: null
     nullable: true
   - handle: code_repair_attempts
+    description: "Maximum number of attempts to repair generated code if errors
+      occur (default: 3)"
     json_schema:
       type: integer
+      minimum: 1
+      maximum: 10
+    value: 3
     nullable: true
   - handle: llm_model
+    description: "LLM model configuration for data transformation agent"
     json_schema:
       ui:options:
         title: Model
@@ -47,18 +62,25 @@ inputs_def:
       max_tokens: 4096
 outputs_def:
   - handle: code_for_derive
+    description: "Generated Python code that performs the data transformation"
     json_schema:
       type: string
   - handle: code_explain
+    description: "Human-readable explanation of what the generated code does"
     json_schema:
       type: string
   - handle: content
+    description: "Transformed data result as an array of objects"
     json_schema:
       type: array
+      items:
+        type: object
   - handle: refined_x_axis_name
+    description: "Final determined name for X-axis field"
     json_schema:
       type: string
   - handle: refined_y_axis_name
+    description: "Final determined name for Y-axis field"
     json_schema:
       type: string
 title: Derive data
@@ -66,4 +88,4 @@ description: Transform and derive new data insights from existing datasets using
   AI-powered analysis and custom calculations
 icon: ":carbon:ibm-application-and-discovery-delivery-intelligence:"
 additional_inputs: false
-private: true
+private: false

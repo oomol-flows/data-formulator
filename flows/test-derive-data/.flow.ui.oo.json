@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    {
+      "id": "derive-data#1",
+      "position": {
+        "x": 100,
+        "y": 100
+      }
+    }
+  ],
+  "edges": [],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  }
+}

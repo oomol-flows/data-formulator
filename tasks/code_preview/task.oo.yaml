@@ -14,7 +14,8 @@ executor:
     spawn: false
 title: Code preview
 description: Preview and display automatically generated Python code for data
-  analysis and visualization
+  analysis and visualization. Note, Users may use this block not only to get
+  return results, but also to view and examine the original code content.
 icon: ":carbon:ibm-watsonx-code-assistant-for-z-refactor:"
 tool: true
-private: true
+private: false

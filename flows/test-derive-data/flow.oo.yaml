@@ -1,0 +1,37 @@
+title: Test Derive Data Task
+description: Test flow for derive-data task functionality with sample data transformation
+nodes:
+  - node_id: derive-data#1
+    title: "Derive Data Test #1"
+    task: self::derive-data
+    inputs_from:
+      - handle: data
+        value:
+          - name: sample_data
+            rows:
+              - name: Alice
+                age: 25
+                score: 85
+              - name: Bob
+                age: 30
+                score: 92
+              - name: Carol
+                age: 28
+                score: 78
+              - name: David
+                age: 35
+                score: 88
+      - handle: instruction
+        value: "Calculate the average score by age group (under 30 vs 30 and above) and create a summary"
+      - handle: x_axis_name
+        value: "age_group"
+      - handle: y_axis_name
+        value: "average_score"
+      - handle: code_repair_attempts
+        value: 3
+      - handle: llm_model
+        value:
+          model: openai/gpt-4.1
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096

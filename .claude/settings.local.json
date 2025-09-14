@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "mcp__oomol__runFlow",
-      "mcp__oomol__getTaskResult"
+      "mcp__oomol__getTaskResult",
+      "mcp__ide__getDiagnostics",
+      "Read(//oomol-driver/oomol-storage/**)"
     ],
     "deny": [],
     "ask": []

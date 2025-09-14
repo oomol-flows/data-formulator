@@ -1,0 +1,32 @@
+description: "Test flow for the optimized summarize-data task with sample data"
+nodes:
+  - node_id: summarize-data#1
+    title: "Summarize Data Analysis"
+    task: self::summarize-data
+    inputs_from:
+      - handle: file_name
+        value: "test_sample_data.csv"
+      - handle: data_rows
+        value:
+          - "name": "Alice"
+            "age": 25
+            "salary": 50000
+            "department": "Engineering"
+          - "name": "Bob"
+            "age": 30
+            "salary": 60000
+            "department": "Marketing"
+          - "name": "Charlie"
+            "age": 35
+            "salary": 70000
+            "department": "Engineering"
+          - "name": "Diana"
+            "age": 28
+            "salary": 55000
+            "department": "Sales"
+          - "name": "Eve"
+            "age": 32
+            "salary": 65000
+            "department": "Marketing"
+      - handle: sample_size
+        value: null

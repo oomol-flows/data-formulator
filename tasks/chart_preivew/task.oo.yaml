@@ -56,8 +56,9 @@ executor:
   options:
     entry: __init__.py
     spawn: false
-title: Result Chart
+title: Chart Preview
 description: Create interactive charts and visualizations from processed data
-  with customizable axes and titles
+  with customizable axes and titles. Note, Users may use this block not only to
+  get return results, but also to view and examine the generated charts.
 icon: ":carbon:chart-average:"
-private: true
+private: false

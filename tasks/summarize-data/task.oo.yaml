@@ -1,23 +1,56 @@
-description: Generate comprehensive summary statistics and data insights for
-  tabular datasets
+description: "Generate comprehensive summary statistics and data insights for
+  tabular datasets with AI-powered analysis"
 executor:
   name: python
   options:
     entry: __init__.py
+    spawn: false
 inputs_def:
   - handle: file_name
+    description: "Name of the data file being analyzed"
     json_schema:
       type: string
+      minLength: 1
+    nullable: false
   - handle: data_rows
+    description: "Array of data rows to analyze"
     json_schema:
       type: array
+      items:
+        type: object
+        additionalProperties: true
+      minItems: 1
+    nullable: false
+  - handle: sample_size
+    description: "Maximum number of rows to analyze for large datasets"
+    json_schema:
+      type: integer
+      minimum: 100
+      maximum: 10000
+    nullable: true
+    value: null
 outputs_def:
   - handle: summary
+    description: "Markdown formatted summary of data insights"
     json_schema:
       type: string
   - handle: fields_schema
+    description: "Schema definition for all detected fields"
     json_schema:
       type: array
-title: " Summarize data"
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+          type:
+            type: string
+          description:
+            type: string
+  - handle: statistics
+    description: "Basic statistical information about the dataset"
+    json_schema:
+      type: object
+title: "Summarize Data"
 icon: ":carbon:report:"
-private: true
+private: false
