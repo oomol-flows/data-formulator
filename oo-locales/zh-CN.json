@@ -2,5 +2,6 @@
   "instruction-xxx-x_axis_name-ai-y_axis_name-ai-code_for_derive-ai": "instruction：需要达到的目的，比如“统计xxx 性价比高低，按照性价比排序”\nx_axis_name: 想要输出的横轴名称，可能会跟输出不一致，由ai 判断\ny_axis_name: 想要输出的纵轴名称，可能会跟输出不一致，由ai 判断\n\ncode_for_derive: ai 自动生成的代码，用于提取数据\ncontent： 按照要求提取的数据\ncode_repair_attempts: 生成错误代码后重新尝试生成的次数",
   "xlsx-csv-input": "传入需要处理的 表格 文件，需要 xlsx 或者 csv 格式。\n文件可以是多个，如果要添加文件请自行增加 input 项，然后选择文件",
   "data-formulator": "数据制定器",
-  "transform-your-data-into-beautiful-visualizations-with-ai-powere": "用 AI 驱动的分析将您的数据转化为精美的可视化图表！Data Formulator 是一款智能工作流平台，帮助您分析电子表格数据，并无需任何编程知识即可创建有意义的图表。"
+  "transform-your-data-into-beautiful-visualizations-with-ai-powere": "用 AI 驱动的分析将您的数据转化为精美的可视化图表！Data Formulator 是一款智能工作流平台，帮助您分析电子表格数据，并无需任何编程知识即可创建有意义的图表。",
+  "ai-powered-data-analysis-workflow-that-automatically-processes-t": "AI驱动的数据分析工作流，可自动处理表格数据，根据用户指令提取洞见，并生成带有可自定义图表的交互式可视化。注意，用户不仅可以通过此模块获取返回结果，还可以查看和检查生成的图表，执行成功就可以看到图，不会提现在输出里面"
 }

@@ -34,5 +34,5 @@ title: Read Files
 description: Read and preview CSV or Excel files from local storage with
   optional data preview functionality. Note, Users may use this block not only
   to get return results, but also to view and examine the original file content.
-private: false
+private: true
 icon: ":carbon:port-input:"

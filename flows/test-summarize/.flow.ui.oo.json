@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "read_files#1": {
-      "rfNode": {
-        "position": {
-          "x": 0,
-          "y": 27
-        }
-      }
-    },
-    "extract-data#1": {
-      "rfNode": {
-        "position": {
-          "x": 412.12876800678066,
-          "y": 27
-        }
-      }
-    },
     "summarize-data#1": {
       "rfNode": {
         "position": {

@@ -1,10 +1,11 @@
-version: 0.1.22
+version: 0.1.23
 scripts:
   bootstrap: |
     npm install
     poetry install --no-root
 dependencies:
   llm: 0.3.4
+  oomol-preview: 0.1.7
 icon: ./icon.png
 name: data-formulator
 description: "%transform-your-data-into-beautiful-visualizations-with-ai-powere%"

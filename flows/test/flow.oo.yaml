@@ -7,7 +7,7 @@ nodes:
       - handle: table
         value: /oomol-driver/oomol-storage/college_student_placement_dataset.csv
       - handle: instruction
-        value: IQ 120 以上的占比
+        value: 学生智商分布的饼图
       - handle: x_axis_name
         value: null
       - handle: llm_model

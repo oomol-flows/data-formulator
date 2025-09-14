@@ -69,6 +69,10 @@ outputs_def:
     description: "Human-readable explanation of what the generated code does"
     json_schema:
       type: string
+  - handle: analysis_logic
+    description: "Analysis logic and processing thoughts in markdown format"
+    json_schema:
+      type: string
   - handle: content
     description: "Transformed data result as an array of objects"
     json_schema:
@@ -88,4 +92,4 @@ description: Transform and derive new data insights from existing datasets using
   AI-powered analysis and custom calculations
 icon: ":carbon:ibm-application-and-discovery-delivery-intelligence:"
 additional_inputs: false
-private: false
+private: true

@@ -101,7 +101,7 @@ nodes:
       - handle: template
         value:
           - role: user
-            content: "使用{{language}}输出{{input}}内容"
+            content: "使用{{language}}输出{{input}}内容，不要加其他"
         schema_overrides:
           - schema:
               type: array
@@ -115,7 +115,7 @@ nodes:
       - handle: input
         from_node:
           - node_id: derive-data#1
-            output_handle: code_explain
+            output_handle: analysis_logic
       - handle: language
         from_node:
           - node_id: llm#2
@@ -254,6 +254,14 @@ nodes:
       - handle: table
         from_flow:
           - input_handle: table
+  - node_id: markdown_text_preview#1
+    title: "Markdown preview #1"
+    inputs_from:
+      - handle: text
+        from_node:
+          - node_id: llm-chat#1
+            output_handle: output
+    task: oomol-preview::markdown_text_preview
 inputs_def:
   - handle: table
     description: Input
@@ -304,6 +312,11 @@ inputs_def:
       occur (default: 3)"
     executor_name: python
 outputs_def:
+  - handle: chart_type
+    json_schema:
+      type: string
+    nullable: false
+    executor_name: python
   - handle: output
     json_schema:
       type: string
@@ -314,8 +327,13 @@ outputs_from:
     from_node:
       - node_id: llm-chat#1
         output_handle: output
+  - handle: chart_type
+    from_node:
+      - node_id: result_chart#1
+        output_handle: chart_type
 icon: ":twemoji:brain:"
 title: "%ai-data-analysis%"
 forward_previews:
   - result_chart#1
+  - markdown_text_preview#1
 description: "%ai-powered-data-analysis-workflow-that-automatically-processes-t%"

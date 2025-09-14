@@ -18,4 +18,4 @@ description: Preview and display automatically generated Python code for data
   return results, but also to view and examine the original code content.
 icon: ":carbon:ibm-watsonx-code-assistant-for-z-refactor:"
 tool: true
-private: false
+private: true
